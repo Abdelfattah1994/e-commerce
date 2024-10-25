@@ -52,7 +52,7 @@
 		
 		public function update(Product $product): void
 		{
-			$this->productRepository->save($product);
+			$this->productRepository->save($product, DatabaseTransaction::COMMIT);
 		}
 		
 		public function delete(Product $product): void
