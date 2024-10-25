@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Receipts{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-6">My Receipts</h1>
+
+        {% if completed_orders|length > 0 %}
+            <div class="bg-white shadow-md rounded my-6">
+                <table class="text-left w-full border-collapse">
+                    <thead>
+                        <tr>
+                            <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Order ID</th>
+                            <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Date</th>
+                            <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Total</th>
+                            <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in completed_orders %}
+                            <tr class="hover:bg-grey-lighter">
+                                <td class="py-4 px-6 border-b border-grey-light">{{ order.id }}</td>
+                                <td class="py-4 px-6 border-b border-grey-light">{{ order.createdAt|date('Y-m-d H:i:s') }}</td>
+                                <td class="py-4 px-6 border-b border-grey-light">{{ order.totalAmount }} €</td>
+                                <td class="py-4 px-6 border-b border-grey-light">
+                                    <a href="#" class="text-blue-600 hover:text-blue-900">Download Receipt</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="text-xl">You have no completed orders yet.</p>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Détails de l'Utilisateur{% endblock %}
+
+{% block page_title %}Détails de l'Utilisateur{% endblock %}
+
+{% block body %}
+    {% embed 'admin/_partials/_table_layout.html.twig' %}
+        {% block table_title %}{{ user.email }}{% endblock %}
+        
+        {% block table_actions %}
+            <a href="{{ path('app_admin_user_edit', {'id': user.id}) }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center mr-2">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                </svg>
+                Modifier
+            </a>
+            <a href="{{ path('app_admin_user_index') }}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded inline-flex items-center">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Retour à la liste
+            </a>
+        {% endblock %}
+
+        {% block table_body %}
+            <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg">
+                <div class="px-4 py-5 sm:px-6">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
+                        Informations de l'utilisateur
+                    </h3>
+                </div>
+                <div class="border-t border-gray-200 dark:border-gray-700">
+                    <dl>
+                        <div class="bg-gray-50 dark:bg-gray-700 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-300">Email</dt>
+                            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100 sm:mt-0 sm:col-span-2">{{ user.email }}</dd>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-300">Prénom</dt>
+                            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100 sm:mt-0 sm:col-span-2">{{ user.firstName }}</dd>
+                        </div>
+                        <div class="bg-gray-50 dark:bg-gray-700 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-300">Nom</dt>
+                            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100 sm:mt-0 sm:col-span-2">{{ user.lastName }}</dd>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-300">Rôles</dt>
+                            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100 sm:mt-0 sm:col-span-2">
+                                {% for role in user.roles %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                        {% if role == 'ROLE_ADMIN' %}
+                                            bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-100
+                                        {% elseif role == 'ROLE_USER' %}
+                                            bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100
+                                        {% else %}
+                                            bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100
+                                        {% endif %}
+                                    ">
+                                        {{ role|replace({'ROLE_': ''}) }}
+                                    </span>
+                                {% endfor %}
+                            </dd>
+                        </div>
+                        <div class="bg-gray-50 dark:bg-gray-700 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-300">Date de création</dt>
+                            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100 sm:mt-0 sm:col-span-2">{{ user.createdAt|date('d/m/Y H:i') }}</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

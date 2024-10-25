@@ -1,0 +1,8 @@
+{% set placeholder = placeholder ?? 'Rechercher....' %}
+
+    {% include 'components/text_field.html.twig' with {
+        name: 'q',
+        placeholder: placeholder,
+        class: class|default('w-96'),
+        value: app.request.query.get('q', '')
+    } %}

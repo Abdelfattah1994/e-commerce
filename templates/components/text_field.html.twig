@@ -1,0 +1,26 @@
+{% set id = id ?? 'input-' ~ random() %}
+
+<div>
+    {% if label is defined %}
+        <label for="{{ id }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+            {{ label }}
+        </label>
+    {% endif %}
+    <input
+            type="{{ type|default('text') }}"
+            id="{{ id }}"
+            name="{{ name }}"
+            {% if value is defined %}value="{{ value }}"{% endif %}
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full py-3 px-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 {{ class|default('') }}"
+            {% if placeholder is defined %}placeholder="{{ placeholder }}"{% endif %}
+            {% if required is defined and required %}required{% endif %}
+            {% if disabled is defined and disabled %}disabled{% endif %}
+            {% if autofocus is defined and autofocus %}autofocus{% endif %}
+    >
+    {% if error is defined and error %}
+        <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ error }}</p>
+    {% endif %}
+    {% if help is defined %}
+        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">{{ help }}</p>
+    {% endif %}
+</div>

@@ -1,0 +1,181 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Liste des produits{% endblock %}
+
+{% block page_title %}Liste des produits{% endblock %}
+
+{% block body %}
+    {% embed 'admin/_partials/_table_layout.html.twig' %}
+        {% block table_title %}Liste des produits{% endblock %}
+
+        {% block table_actions %}
+            <div class="flex justify-end items-center gap-2">
+                {% include 'components/search_form.html.twig' with {
+                    placeholder: 'Rechercher un produit...',
+                } %}
+                <a href="{{ path('app_admin_product_new') }}"
+                   class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded inline-flex items-center">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                    Ajouter un produit
+                </a>
+            </div>
+        {% endblock %}
+
+        {% block table_header %}
+            <tr>
+                <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-gray-100 uppercase tracking-wider">
+                    Nom
+                </th>
+                <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-gray-100 uppercase tracking-wider">
+                    Prix
+                </th>
+                <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-gray-100 uppercase tracking-wider">
+                    Stock
+                </th>
+                <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-gray-100 uppercase tracking-wider">
+                    Catégorie
+                </th>
+                <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-gray-100 uppercase tracking-wider">
+                    Actif
+                </th>
+                <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-gray-100 uppercase tracking-wider">
+                    Mis en avant
+                </th>
+                <th scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-900 dark:text-gray-100 uppercase tracking-wider">
+                    Actions
+                </th>
+            </tr>
+        {% endblock %}
+
+        {% block table_body %}
+            {% for product in products %}
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">
+                        {{ product.name }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                        {{ product.price|number_format(2, ',', ' ') }} €
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                        {{ product.stock }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                        {{ product.category.name }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                        {% if product.active %}
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Actif</span>
+                        {% else %}
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Inactif</span>
+                        {% endif %}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                        <form action="{{ path('app_admin_product_toggle_featured', {'id': product.id}) }}"
+                              method="post">
+                            <label class="switch">
+                                <input type="checkbox" name="featured" {% if product.featured %}checked{% endif %}
+                                       onchange="this.form.submit()">
+                                <span class="slider round"></span>
+                            </label>
+                        </form>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <a href="{{ path('app_admin_product_show', {'id': product.id}) }}"
+                           class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-600 mr-2">
+                            <svg class="w-5 h-5 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                            </svg>
+                        </a>
+                        <a href="{{ path('app_admin_product_edit', {'id': product.id}) }}"
+                           class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-600">
+                            <svg class="w-5 h-5 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+    </style>
+{% endblock %}

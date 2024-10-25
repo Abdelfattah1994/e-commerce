@@ -1,0 +1,25 @@
+<div class="bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden">
+    <div class="px-4 py-5 sm:px-6 flex justify-between items-center">
+        <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
+            {% block table_title %}Liste des éléments{% endblock %}
+        </h3>
+        {% block table_actions %}{% endblock %}
+    </div>
+    <div class="border-t border-gray-200 dark:border-gray-700">
+        <div class="px-4 py-5 sm:p-6">
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                    <thead class="bg-gray-50 dark:bg-gray-700">
+                        {% block table_header %}{% endblock %}
+                    </thead>
+                    <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                        {% block table_body %}{% endblock %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="bg-gray-50 dark:bg-gray-700 px-4 py-3 sm:px-6">
+        {% block table_footer %}{% endblock %}
+    </div>
+</div>

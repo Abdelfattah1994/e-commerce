@@ -1,0 +1,11 @@
+{% set action = action ?? '' %}
+{% set placeholder = placeholder ?? 'Rechercher....' %}
+
+<form action="{{ action }}">
+    {% include 'components/search_field.html.twig' with {
+        name: 'q',
+        placeholder: placeholder,
+        class: class|default('w-96'),
+        value: app.request.query.get('q', '')
+    } %}
+</form>

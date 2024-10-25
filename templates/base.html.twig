@@ -1,17 +1,69 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Welcome!{% endblock %} - E-Shop</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col">
+{% include '_partials/_header.html.twig' %}
+
+<main class="flex-grow container mx-auto px-4 py-8">
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="bg-{{ label == 'success' ? 'green' : 'red' }}-100 dark:bg-{{ label == 'success' ? 'green' : 'red' }}-900 border border-{{ label == 'success' ? 'green' : 'red' }}-400 dark:border-{{ label == 'success' ? 'green' : 'red' }}-600 text-{{ label == 'success' ? 'green' : 'red' }}-700 dark:text-{{ label == 'success' ? 'green' : 'red' }}-300 px-4 py-3 rounded relative mb-4" role="alert">
+                <span class="block sm:inline">{{ message }}</span>
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    {% block body %}{% endblock %}
+</main>
+
+<footer class="bg-gray-800 dark:bg-gray-950 text-white py-4">
+    <div class="container mx-auto px-4 text-center">
+        <p>&copy; {{ 'now'|date('Y') }} {{ site_settings is not null and site_settings.siteName ? site_settings.siteName : 'Symfony Shop' }} | Tous droits réservés.</p>
+    </div>
+</footer>
+<script>
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark')
+    } else {
+        document.documentElement.classList.remove('dark')
+    }
+
+    window.addEventListener('toggle-dark-mode', function() {
+        toggleAndSaveDarkMode()
+    })
+
+
+    document.getElementById('toggle-dark-mode').addEventListener('click', function() {
+        document.getElementById('sun').classList.toggle('hidden')
+        document.getElementById('moon').classList.toggle('hidden')
+        toggleAndSaveDarkMode()
+    })
+
+
+    const toggleAndSaveDarkMode = () => {
+        if (localStorage.theme === 'dark') {
+            localStorage.theme = 'light'
+            document.documentElement.classList.remove('dark')
+        } else {
+            localStorage.theme = 'dark'
+            document.documentElement.classList.add('dark')
+        }
+    }
+
+</script>
+</body>
 </html>

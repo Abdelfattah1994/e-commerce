@@ -1,0 +1,74 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Nouveau produit{% endblock %}
+
+{% block page_title %}Créer un nouveau produit{% endblock %}
+
+{% block body %}
+    <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg">
+        <div class="px-4 py-5 sm:px-6">
+            <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
+                Informations du produit
+            </h3>
+            <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">
+                Veuillez remplir tous les champs nécessaires.
+            </p>
+        </div>
+        <div class="border-t border-gray-200 dark:border-gray-700">
+            <div class="px-4 py-5 sm:p-6">
+                {{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
+                    <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                        <div class="sm:col-span-4">
+                            {{ form_row(form.name, {'attr': {'class': 'mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white'}}) }}
+                        </div>
+
+                        <div class="sm:col-span-6">
+                            {{ form_row(form.description, {'attr': {'class': 'mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white', 'rows': '3'}}) }}
+                        </div>
+
+                        <div class="sm:col-span-2">
+                            {{ form_row(form.price, {'attr': {'class': 'mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white'}}) }}
+                        </div>
+
+                        <div class="sm:col-span-2">
+                            {{ form_row(form.stock, {'attr': {'class': 'mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white'}}) }}
+                        </div>
+
+                        <div class="sm:col-span-3">
+                            {{ form_row(form.category, {'attr': {'class': 'mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white'}}) }}
+                        </div>
+
+                        <div class="sm:col-span-4">
+                            {{ form_row(form.image, {'attr': {'class': 'mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white'}}) }}
+                        </div>
+
+                        <div class="sm:col-span-2">
+                            {{ form_row(form.active, {'attr': {'class': 'focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600'}}) }}
+                        </div>
+
+                        <div class="sm:col-span-2">
+                            {{ form_row(form.featured, {'attr': {'class': 'focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600'}}) }}
+                        </div>
+                    </div>
+
+                    <div class="pt-5">
+                        <div class="flex justify-end">
+                            <a href="{{ path('app_admin_product_index') }}" class="bg-gray-200 dark:bg-gray-700 py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 inline-flex items-center">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                                </svg>
+                                Annuler
+                            </a>
+                            <button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-600">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                </svg>
+                                Créer
+                            </button>
+                        </div>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

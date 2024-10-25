@@ -1,0 +1,76 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Détails du ticket de support{% endblock %}
+
+{% block page_title %}Détails du ticket de support{% endblock %}
+
+{% block body %}
+    {% embed 'admin/_partials/_table_layout.html.twig' %}
+        {% block table_title %}Ticket #{{ support_ticket.id }}{% endblock %}
+        
+        {% block table_actions %}
+            <a href="{{ path('app_admin_support_ticket_edit', {'id': support_ticket.id}) }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center mr-2">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                </svg>
+                Modifier
+            </a>
+            <a href="{{ path('app_admin_support_ticket_index') }}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded inline-flex items-center">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Retour à la liste
+            </a>
+        {% endblock %}
+
+        {% block table_body %}
+            <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg">
+                <div class="px-4 py-5 sm:px-6">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
+                        Informations du ticket
+                    </h3>
+                </div>
+                <div class="border-t border-gray-200 dark:border-gray-700">
+                    <dl>
+                        <div class="bg-gray-50 dark:bg-gray-700 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-900 dark:text-gray-100">ID</dt>
+                            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100 sm:mt-0 sm:col-span-2">{{ support_ticket.id }}</dd>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-900 dark:text-gray-100">Utilisateur</dt>
+                            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100 sm:mt-0 sm:col-span-2">{{ support_ticket.user.email }}</dd>
+                        </div>
+                        <div class="bg-gray-50 dark:bg-gray-700 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-900 dark:text-gray-100">Sujet</dt>
+                            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100 sm:mt-0 sm:col-span-2">{{ support_ticket.subject }}</dd>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-900 dark:text-gray-100">Message</dt>
+                            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100 sm:mt-0 sm:col-span-2">{{ support_ticket.message }}</dd>
+                        </div>
+                        <div class="bg-gray-50 dark:bg-gray-700 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-900 dark:text-gray-100">Statut</dt>
+                            <dd class="mt-1 text-sm sm:mt-0 sm:col-span-2">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                    {% if support_ticket.status == 'OPEN' %}
+                                        bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100
+                                    {% elseif support_ticket.status == 'IN_PROGRESS' %}
+                                        bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100
+                                    {% elseif support_ticket.status == 'CLOSED' %}
+                                        bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-100
+                                    {% endif %}
+                                ">
+                                    {{ support_ticket.status }}
+                                </span>
+                            </dd>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-900 dark:text-gray-100">Date de création</dt>
+                            <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100 sm:mt-0 sm:col-span-2">{{ support_ticket.createdAt|date('d/m/Y H:i') }}</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

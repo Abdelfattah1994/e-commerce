@@ -1,0 +1,57 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Nouvel utilisateur{% endblock %}
+
+{% block page_title %}Créer un nouvel utilisateur{% endblock %}
+
+{% block body %}
+    {% embed 'admin/_partials/_table_layout.html.twig' %}
+        {% block table_title %}Nouvel utilisateur{% endblock %}
+        
+        {% block table_actions %}
+            <a href="{{ path('app_admin_user_index') }}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded inline-flex items-center">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Retour à la liste
+            </a>
+        {% endblock %}
+
+        {% block table_body %}
+            {{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
+                <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                    <div class="sm:col-span-3">
+                        {{ form_row(form.email, {'attr': {'class': 'mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white'}}) }}
+                    </div>
+
+                    <div class="sm:col-span-3">
+                        {{ form_row(form.firstName, {'attr': {'class': 'mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white'}}) }}
+                    </div>
+
+                    <div class="sm:col-span-3">
+                        {{ form_row(form.lastName, {'attr': {'class': 'mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white'}}) }}
+                    </div>
+
+                    <div class="sm:col-span-3">
+                        {{ form_row(form.plainPassword, {'attr': {'class': 'mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white'}}) }}
+                    </div>
+
+                    <div class="sm:col-span-3">
+                        {{ form_row(form.roles, {'attr': {'class': 'mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white'}}) }}
+                    </div>
+                </div>
+
+                <div class="pt-5">
+                    <div class="flex justify-end">
+                        <button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-600">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            </svg>
+                            Créer
+                        </button>
+                    </div>
+                </div>
+            {{ form_end(form) }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Support Tickets{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-6">Support Tickets</h1>
+
+        <a href="{{ path('app_shop_support_new') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4 inline-block">
+            Create New Ticket
+        </a>
+
+        {% if tickets|length > 0 %}
+            <div class="bg-white shadow-md rounded my-6">
+                <table class="text-left w-full border-collapse">
+                    <thead>
+                        <tr>
+                            <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Ticket ID</th>
+                            <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Subject</th>
+                            <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Status</th>
+                            <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Created At</th>
+                            <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ticket in tickets %}
+                            <tr class="hover:bg-grey-lighter">
+                                <td class="py-4 px-6 border-b border-grey-light">{{ ticket.id }}</td>
+                                <td class="py-4 px-6 border-b border-grey-light">{{ ticket.subject }}</td>
+                                <td class="py-4 px-6 border-b border-grey-light">{{ ticket.status }}</td>
+                                <td class="py-4 px-6 border-b border-grey-light">{{ ticket.createdAt|date('Y-m-d H:i:s') }}</td>
+                                <td class="py-4 px-6 border-b border-grey-light">
+                                    <a href="{{ path('app_shop_support_show', {'id': ticket.id}) }}" class="text-blue-600 hover:text-blue-900">View</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="text-xl">You have no support tickets.</p>
+        {% endif %}
+    </div>
+{% endblock %}

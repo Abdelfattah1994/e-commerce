@@ -1,0 +1,38 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ product.id ? 'Edit Product' : 'New Product' }}{% endblock %}
+
+{% block header %}{{ product.id ? 'Edit Product' : 'New Product' }}{% endblock %}
+
+{% block body %}
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+        <div class="px-4 py-5 sm:p-6">
+            {{ form_start(form, {'attr': {'class': 'space-y-8 divide-y divide-gray-200'}}) }}
+                <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
+                    <div>
+                        <div class="mt-6 sm:mt-5 space-y-6 sm:space-y-5">
+                            {{ form_row(form.name, {'attr': {'class': 'max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md'}}) }}
+                            {{ form_row(form.description, {'attr': {'class': 'max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md'}}) }}
+                            {{ form_row(form.price, {'attr': {'class': 'max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md'}}) }}
+                            {{ form_row(form.stock, {'attr': {'class': 'max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md'}}) }}
+                            {{ form_row(form.category, {'attr': {'class': 'max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md'}}) }}
+                            {{ form_row(form.image, {'attr': {'class': 'max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md'}}) }}
+                            {{ form_row(form.active) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-5">
+                    <div class="flex justify-end">
+                        <a href="{{ path('app_admin_product_index') }}" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Cancel
+                        </a>
+                        <button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Save
+                        </button>
+                    </div>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

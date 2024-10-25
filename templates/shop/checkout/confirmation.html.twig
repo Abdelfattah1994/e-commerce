@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Order Confirmation{% endblock %}
+
+{% block body %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-6">Order Confirmation</h1>
+
+    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6" role="alert">
+        <p class="font-bold">Thank you for your order!</p>
+        <p>Your order has been successfully placed and is being processed.</p>
+    </div>
+
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+        <div class="px-4 py-5 sm:px-6">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">Order Details</h3>
+        </div>
+        <div class="border-t border-gray-200">
+            <dl>
+                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">Order Number</dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ order.id }}</dd>
+                </div>
+                <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">Total Amount</dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ order.totalAmount|number_format(2) }} €</dd>
+                </div>
+                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">Status</dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ order.status }}</dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+
+    <div class="mt-8">
+        <a href="{{ path('app_home') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Continue Shopping
+        </a>
+    </div>
+</div>
+{% endblock %}

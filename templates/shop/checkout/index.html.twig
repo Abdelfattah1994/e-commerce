@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Finaliser votre commande{% endblock %}
+
+{% block body %}
+<div class="bg-gray-100 dark:bg-gray-900 min-h-screen py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 class="text-3xl font-extrabold text-gray-900 dark:text-gray-100 mb-8 text-center">Finaliser votre commande</h1>
+        
+        <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg">
+            <div class="px-4 py-5 sm:p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Récapitulatif de la commande -->
+                    <div>
+                        <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">Récapitulatif de votre commande</h2>
+                        <div class="space-y-4">
+                            {% for item in cart.items %}
+                                <div class="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 pb-4">
+                                    <div class="flex items-center">
+                                        <img src="{{ asset(item.product.image) }}" alt="{{ item.product.name }}" class="w-16 h-16 object-cover rounded-md mr-4">
+                                        <div>
+                                            <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ item.product.name }}</h3>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400">Quantité: {{ item.quantity }}</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ (item.product.price * item.quantity)|number_format(2, ',', ' ') }} €</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="mt-6 flex justify-between items-center">
+                            <p class="text-xl font-semibold text-gray-900 dark:text-gray-100">Total</p>
+                            <p class="text-2xl font-bold text-indigo-600 dark:text-indigo-400">{{ cart.total|number_format(2, ',', ' ') }} €</p>
+                        </div>
+                    </div>
+
+                    <!-- Formulaire de paiement -->
+                    <div>
+                        <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">Informations de paiement</h2>
+                        <div class="space-y-6 bg-gray-100 dark:bg-gray-700 p-6 rounded-md shadow-md relative overflow-hidden">
+                            <!-- Overlay pour indiquer que la carte est désactivée -->
+                            <div class="absolute inset-0 bg-gray-200 dark:bg-gray-600 bg-opacity-50 dark:bg-opacity-50 flex items-center justify-center z-10">
+                                <span class="text-lg font-semibold text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 px-4 py-2 rounded-full shadow-md">Carte virtuelle</span>
+                            </div>
+                            
+                            <div class="relative z-0">
+                                <label for="card-number" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Numéro de carte</label>
+                                <input disabled value="{{ card.cardNumber }}" type="text" id="card-number" name="card-number" class="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm py-2 px-3 text-gray-400 dark:text-gray-500 cursor-not-allowed">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="relative z-0">
+                                    <label for="expiry-date" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Date d'expiration</label>
+                                    <input disabled value="{{ card.expirationDate|date('m/y') }}" type="text" id="expiry-date" name="expiry-date" class="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm py-2 px-3 text-gray-400 dark:text-gray-500 cursor-not-allowed">
+                                </div>
+                                <div class="relative z-0">
+                                    <label for="cvv" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">CVV</label>
+                                    <input disabled value="{{ card.cvv }}" type="text" id="cvv" name="cvv" class="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm py-2 px-3 text-gray-400 dark:text-gray-500 cursor-not-allowed">
+                                </div>
+                            </div>
+                            <div class="relative z-0">
+                                <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nom sur la carte</label>
+                                <input disabled value="{{ card.name }}" type="text" id="name" name="name" class="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm py-2 px-3 text-gray-400 dark:text-gray-500 cursor-not-allowed">
+                            </div>
+                        </div>
+                        <form action="{{ path('app_checkout_process') }}" method="POST" class="mt-6">
+                            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-md shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                Payer {{ cart.total|number_format(2, ',', ' ') }} €
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
